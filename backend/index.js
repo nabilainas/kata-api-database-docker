@@ -1,0 +1,11 @@
+const express = require('express');
+const app = express();
+const port = 5000;
+
+app('/', (req, res) => {
+  res.send('Hello World!');
+});
+
+app.listen(port, () => {
+  console.log(`Node.js API listening at http://localhost:${port}`);
+})
