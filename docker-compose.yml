@@ -1,0 +1,10 @@
+version: '2.4'
+
+react-app:
+    image: react-app
+    container_name: react-app
+    build: 
+      context: frontend/
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
