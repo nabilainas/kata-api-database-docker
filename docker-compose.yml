@@ -22,8 +22,8 @@ services:
 
   adminer:
     image: adminer
-    restart: always
     container_name: postgres-database-ui
+    restart: always
     ports:
       - 8080:8080
 
