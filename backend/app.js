@@ -1,13 +1,15 @@
 const express = require('express');
+const cors = require('cors');
 const app = express();
 const { Pool } = require('pg');
-
+app.use(cors());
 
 const pool = new Pool({
-  host: 'localhost',
+  host: '70406f6f84d5',
   port: 5432,
   user: 'username',
   password: 'password',
+  database: 'mydatabase'
 });
 
 pool.connect((err) => {
@@ -17,14 +19,14 @@ pool.connect((err) => {
     console.log('connected')
   }
 })
-// app.get('/users', (req, res) => {
-//   pool.query('SELECT * FROM table', (error, result) => {
-//     if (error) {
-//       throw error;
-//     }
+app.get('/users', (req, res) => {
+  pool.query('SELECT * FROM users', (error, result) => {
+    if (error) {
+      throw error;
+    }
 
-//     res.status(200).json(result.rows);
-//   });
-// });
+    res.status(200).json(result.rows);
+  });
+});
 
 module.exports = app
