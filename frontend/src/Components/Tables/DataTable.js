@@ -7,7 +7,7 @@ class DataTable extends Component {
   deleteItem = id => {
     let confirmDelete = window.confirm('Delete item forever?')
     if(confirmDelete){
-      fetch('http://localhost:3000/crud', {
+      fetch('http://localhost:80/users', {
       method: 'delete',
       headers: {
         'Content-Type': 'application/json'
@@ -34,9 +34,6 @@ class DataTable extends Component {
           <td>{item.first}</td>
           <td>{item.last}</td>
           <td>{item.email}</td>
-          <td>{item.phone}</td>
-          <td>{item.location}</td>
-          <td>{item.hobby}</td>
           <td>
             <div style={{width:"110px"}}>
               <ModalForm buttonLabel="Edit" item={item} updateState={this.props.updateState}/>
@@ -56,10 +53,6 @@ class DataTable extends Component {
             <th>First</th>
             <th>Last</th>
             <th>Email</th>
-            <th>Phone</th>
-            <th>Location</th>
-            <th>Hobby</th>
-            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
