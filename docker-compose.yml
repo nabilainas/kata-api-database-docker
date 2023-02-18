@@ -23,13 +23,11 @@ services:
   adminer:
     image: adminer
     container_name: postgres-database-ui
-    restart: always
     ports:
       - 8080:8080
 
   db:
     image: postgres
-    restart: always
     container_name: postgres-database
     environment:
       POSTGRES_USER: username
