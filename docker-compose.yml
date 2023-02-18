@@ -10,6 +10,9 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
+    networks:
+      network:
+        ipv4_address: 10.5.0.2 # adminer static ip
     
   # node-api:
   #   image: node-api
@@ -19,12 +22,18 @@ services:
   #     dockerfile: Dockerfile
   #   ports:
   #     - "5000:5000"
+  # networks:
+  #   network:
+  #     ipv4_address: 10.5.0.3 # api static ip
 
   adminer:
     image: adminer
     container_name: postgres-database-ui
     ports:
       - 8080:8080
+    networks:
+      network:
+        ipv4_address: 10.5.0.4 # adminer static ip
 
   db:
     image: postgres
@@ -33,6 +42,9 @@ services:
       POSTGRES_USER: username
       POSTGRES_PASSWORD: password
       POSTGRES_DB: mydatabase
+    networks:
+      network:
+        ipv4_address: 10.5.0.5 # database static ip
     ports:
       - 5432:5432
     volumes:
@@ -43,3 +55,11 @@ services:
 volumes:
   postgres-data:
     name: database-volume-1
+
+networks:
+  network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.5.0.0/16
+          gateway: 10.5.0.1
