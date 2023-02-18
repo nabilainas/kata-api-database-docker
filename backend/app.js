@@ -5,20 +5,26 @@ const { Pool } = require('pg');
 
 const pool = new Pool({
   host: 'localhost',
-  database: 'ma_base_de_donnees',
-  password: 'password',
   port: 5432,
+  user: 'username',
+  password: 'password',
 });
 
-// Définition d'une route qui récupère les éléments de la base de données
-app.get('/users', (req, res) => {
-  pool.query('SELECT * FROM table', (error, result) => {
-    if (error) {
-      throw error;
-    }
+pool.connect((err) => {
+  if (err) {
+    console.error('connection error', err.stack)
+  } else {
+    console.log('connected')
+  }
+})
+// app.get('/users', (req, res) => {
+//   pool.query('SELECT * FROM table', (error, result) => {
+//     if (error) {
+//       throw error;
+//     }
 
-    res.status(200).json(result.rows);
-  });
-});
+//     res.status(200).json(result.rows);
+//   });
+// });
 
 module.exports = app
