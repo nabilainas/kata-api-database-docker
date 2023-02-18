@@ -7,13 +7,14 @@ WORKDIR /app
 # Copie des fichiers de l'application dans le conteneur
 COPY package.json .
 COPY package-lock.json .
-COPY index.js .
+COPY server.js .
+COPY app.js .
 
 # Installation des dépendances de l'application
 RUN npm install
 
 # Exposition du port utilisé par l'application
-EXPOSE 5000
+EXPOSE 80
 
 # Commande pour démarrer l'application
 CMD ["npm", "start"]
