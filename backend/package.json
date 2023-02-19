@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "jest"
   },
   "author": "",
   "license": "ISC",
@@ -12,9 +13,5 @@
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "pg": "^8.9.0"
-  },
-  "devDependencies": {
-    "jest": "^29.4.3",
-    "supertest": "^6.3.3"
   }
 }
