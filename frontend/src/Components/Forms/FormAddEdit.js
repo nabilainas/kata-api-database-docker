@@ -3,7 +3,7 @@ import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 
 class AddEditForm extends React.Component {
   state = {
-    id: 0,
+    id : 0,
     first: '',
     last: '',
     email: '',
@@ -40,7 +40,8 @@ class AddEditForm extends React.Component {
 
   submitFormEdit = e => {
     e.preventDefault()
-    fetch('http://localhost:80/users', {
+    const id = this.state.id
+    fetch(`http://localhost:80/users/${id}`, {
       method: 'put',
       headers: {
         'Content-Type': 'application/json'
