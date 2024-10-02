@@ -2,6 +2,6 @@ global:
   scrape_interval: 15s
 
 scrape_configs:
-  - job_name: 'node_api'
+  - job_name: 'node'
     static_configs:
       - targets: ['node-api:80']  # Assurez-vous que cela correspond au service et port
