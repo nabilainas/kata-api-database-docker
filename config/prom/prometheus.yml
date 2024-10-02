@@ -2,6 +2,10 @@ global:
   scrape_interval: 15s
 
 scrape_configs:
+  - job_name: 'nodejsapi'
+    static_configs:
+      - targets: ['node-api:80']
+
   - job_name: 'node'
     static_configs:
-      - targets: ['node-api:80']  # Assurez-vous que cela correspond au service et port
+      - targets: ['node-exporter:9100']
