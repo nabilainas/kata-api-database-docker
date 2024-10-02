@@ -1,20 +1,23 @@
-# Définition de l'image de base
-FROM node:16-alpine
+FROM node:16 AS build
 
-# Définition du répertoire de travail dans le conteneur
 WORKDIR /app
 
-# Copie des fichiers de l'application dans le conteneur
-COPY package.json .
-COPY package-lock.json .
-COPY server.js .
-COPY app.js .
+COPY package.json ./
+COPY package-lock.json ./
 
-# Installation des dépendances de l'application
 RUN npm install
 
-# Exposition du port utilisé par l'application
+COPY . ./
+
+RUN npm run build
+
+FROM nginx:alpine
+
+COPY --from=build /app/build /usr/share/nginx/html
+
+# Copier le fichier de configuration personnalisé de Nginx si nécessaire
+# COPY nginx.conf /etc/nginx/nginx.conf
+
 EXPOSE 80
 
-# Commande pour démarrer l'application
-CMD ["npm", "start"]
+CMD ["nginx", "-g", "daemon off;"]

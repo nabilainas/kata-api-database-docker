@@ -1,14 +1,14 @@
 version: '2.4'
 
 services:
-  react-app:
-    image: react-app
-    container_name: react-app
-    build: 
+  nginx:
+    image: nginx-react-app
+    container_name: nginx-react-app
+    build:
       context: frontend/
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile  # Le Dockerfile pour construire l'app React et configurer Nginx
     ports:
-      - "3000:3000"
+      - "3000:80"
   
   node-api:
     image: node-api
@@ -28,6 +28,14 @@ services:
       - "9090:9090"
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
+  
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - "3001:3000"  # Grafana is accessible on port 3001
+    volumes:
+      - grafana-data:/var/lib/grafana
   
   adminer:
     image: adminer
@@ -52,3 +60,5 @@ volumes:
     name: database-volume-1
   prometheus-data:
     name: prometheus-volume
+  grafana-data:
+    name: grafana-volume
