@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
-
+import { apiUrl } from '../..'
 class AddEditForm extends React.Component {
   state = {
     id : 0,
@@ -15,7 +15,7 @@ class AddEditForm extends React.Component {
 
   submitFormAdd = e => {
     e.preventDefault()
-    fetch('http://localhost:80/users', {
+    fetch(`${apiUrl}/users`, {
       method: 'post',
       headers: {
         'Content-Type': 'application/json'
@@ -41,7 +41,7 @@ class AddEditForm extends React.Component {
   submitFormEdit = e => {
     e.preventDefault()
     const id = this.state.id
-    fetch(`http://localhost:80/users/${id}`, {
+    fetch(`${apiUrl}/users/${id}`, {
       method: 'put',
       headers: {
         'Content-Type': 'application/json'

@@ -1,5 +1,7 @@
 FROM node:16 AS build
 
+ARG API_URL
+ENV API_URL=$API_URL
 WORKDIR /app
 
 COPY package.json ./
@@ -9,15 +11,10 @@ RUN npm install
 
 COPY . ./
 
+
 RUN npm run build
-
-FROM nginx:alpine
-
-COPY --from=build /app/build /usr/share/nginx/html
-
-# Copier le fichier de configuration personnalisé de Nginx si nécessaire
-# COPY nginx.conf /etc/nginx/nginx.conf
+RUN npm install -g serve  build
 
 EXPOSE 80
 
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["serve", "-s", "build"]
