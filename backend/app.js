@@ -4,9 +4,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+const dbUrl = process.env.DATABASE_URL 
+
 const { Pool } = require('pg');
 const pool = new Pool({
-  host: 'postgres',
+  host: dbUrl,
   port: 5432,
   user: 'username',
   password: 'password',
@@ -40,6 +42,7 @@ app.get('/metrics', async (req, res) => {
 
 
 app.get('/', (req, res) => {
+  console.log(`URL : ${dbUrl}`);
   setTimeout(() => {
     res.json({ message: 'Hello World!' });
   }, Math.round(Math.random() * 200));
