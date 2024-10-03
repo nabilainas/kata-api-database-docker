@@ -54,12 +54,6 @@ services:
       - "3001:3000"  # Grafana is accessible on port 3001
     volumes:
       - ./data/grafana:/var/lib/grafana
-  
-  adminer:
-    image: adminer
-    container_name: postgres-database-ui
-    ports:
-      - "8080:8080"
 
   db:
     image: postgres
