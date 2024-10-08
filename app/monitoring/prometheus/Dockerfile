@@ -1,10 +1,12 @@
 FROM prom/prometheus
 
+ARG TARGET
+
 COPY prometheus.template.yml /etc/prometheus/prometheus.template.yml
 
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+RUN mkdir -p /prometheus && \
+    TARGET=${TARGET} envsubst < /etc/prometheus/prometheus.template.yml > /etc/prometheus/prometheus.yml
 
-ENTRYPOINT ["/entrypoint.sh"]
+CMD ["prometheus", "--config.file=/etc/prometheus/prometheus.yml", "--storage.tsdb.path=/prometheus"]
 
 EXPOSE 9090
