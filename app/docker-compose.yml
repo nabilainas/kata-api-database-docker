@@ -1,68 +1,68 @@
-version: '2.4'
+version: '3.8'
 
 services:
-  nginx:
-    image: nginx-react-app
-    container_name: nginx-react-app
+  frontend:
+    image: frontend
+    container_name: frontend
     build:
       context: frontend/
-      dockerfile: Dockerfile  # Le Dockerfile pour construire l'app React et configurer Nginx
+      dockerfile: Dockerfile
+      args:
+        - API_URL=http://localhost:8080
     ports:
-      - "3000:80"
-  
-  node-api:
-    image: node-api
-    container_name: node-api
+      - "3000:3000"
+    depends_on:
+      - api
+
+  api:
+    image: api
+    container_name: api
     build: 
-      context: backend/
+      context: api/
       dockerfile: Dockerfile
     ports:
-      - "80:80"  # Assurez-vous que le conteneur expose bien l'API sur le port 80
+      - "8080:8080"
+    environment:
+      - DB_HOST=database
+      - DB_PORT=5432
+      - DB_USER=username
+      - DB_PASSWORD=password
+      - DB_NAME=mydatabase
+    depends_on:
+      - database
+
   
   prometheus:
     image: prom/prometheus
     container_name: prometheus
     volumes:
-      - ./config/prom/prometheus.yml:/etc/prometheus/prometheus.yml
-      - ./data/prometheus:/prometheus
+      - ./monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
-      - '--storage.tsdb.path=/prometheus'
     ports:
       - "9090:9090"
+    depends_on:
+      - api
   
-  node-exporter:
-    image: prom/node-exporter:latest
-    container_name: node-exporter
-    restart: unless-stopped
-    volumes:
-      - /proc:/host/proc:ro
-      - /sys:/host/sys:ro
-      - /:/rootfs:ro
-    command:
-      - '--path.procfs=/host/proc'
-      - '--path.rootfs=/rootfs'
-      - '--path.sysfs=/host/sys'
-      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
-    expose:
-      - 9100
-
   grafana:
     image: grafana/grafana
     container_name: grafana
     ports:
-      - "3001:3000"  # Grafana is accessible on port 3001
+      - "3001:3000"
     volumes:
       - ./data/grafana:/var/lib/grafana
+    depends_on:
+      - prometheus
 
-  db:
+  database:
     image: postgres
-    container_name: postgres-database
+    container_name: database
     environment:
       POSTGRES_USER: username
       POSTGRES_PASSWORD: password
       POSTGRES_DB: mydatabase
-    hostname: postgres
     volumes:
       - ./data/database:/var/lib/postgresql/data
-      - ./config/db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
