@@ -11,6 +11,7 @@ class App extends Component {
   }
 
   getItems(){
+    console.log(apiUrl)
     fetch(`${apiUrl}/users`)
       .then(response => response.json())
       .then(items => this.setState({items}))
