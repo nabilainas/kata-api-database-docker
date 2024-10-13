@@ -49,6 +49,7 @@ Avant de lancer les scripts, connectez-vous à Azure :
 
 ```bash
 az login
+az acr login --name <ACR_NAME>
 ```
 
 ### B - Construction et push des images
