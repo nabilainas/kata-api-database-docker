@@ -1,9 +1,10 @@
 #!/bin/sh
 API_URL=$1
+TAG=$2
 
-FRONTEND_IMAGE="nabilainas.azurecr.io/frontend:latest"
-PROMETHEUS_IMAGE="nabilainas.azurecr.io/prometheus:latest"
-GRAFANA_IMAGE="nabilainas.azurecr.io/grafana:latest"
+FRONTEND_IMAGE=nabilainas.azurecr.io/frontend:$TAG
+PROMETHEUS_IMAGE=nabilainas.azurecr.io/prometheus:$TAG
+GRAFANA_IMAGE=nabilainas.azurecr.io/grafana:$TAG
 
 
 cd frontend
