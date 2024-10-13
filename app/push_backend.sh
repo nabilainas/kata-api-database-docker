@@ -1,11 +1,13 @@
 #!/bin/sh
-TAG=$1
+REGISTRY=$1
 cd database
 
-docker build --platform linux/amd64 -t nabilainas.azurecr.io/database:$TAG .
-docker push nabilainas.azurecr.io/database:$TAG
+echo "Building and pushing database image to $REGISTRY.azurecr.io/database:latest"
+docker build --platform linux/amd64 -t $REGISTRY.azurecr.io/database:latest .
+docker push $REGISTRY.azurecr.io/database:latest
 
 cd ../api
 
-docker build --platform linux/amd64 -t nabilainas.azurecr.io/api:$TAG .
-docker push nabilainas.azurecr.io/api:$TAG
+echo "Building and pushing api image to $REGISTRY.azurecr.io/api:latest"
+docker build --platform linux/amd64 -t $REGISTRY.azurecr.io/api:latest .
+docker push $REGISTRY.azurecr.io/api:latest

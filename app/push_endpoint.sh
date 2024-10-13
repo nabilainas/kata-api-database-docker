@@ -1,10 +1,10 @@
 #!/bin/sh
 API_URL=$1
-TAG=$2
+REGISTRY=$2
 
-FRONTEND_IMAGE=nabilainas.azurecr.io/frontend:$TAG
-PROMETHEUS_IMAGE=nabilainas.azurecr.io/prometheus:$TAG
-GRAFANA_IMAGE=nabilainas.azurecr.io/grafana:$TAG
+FRONTEND_IMAGE=$REGISTRY.azurecr.io/frontend:latest
+PROMETHEUS_IMAGE=$REGISTRY.azurecr.io/prometheus:latest
+GRAFANA_IMAGE=$REGISTRY.azurecr.io/grafana:latest
 
 
 cd frontend
@@ -19,4 +19,4 @@ docker pull grafana/grafana:latest
 docker tag grafana/grafana:latest "$GRAFANA_IMAGE" 
 docker push "$GRAFANA_IMAGE"
 
-echo "Build et push terminés pour frontend, prometheus, et grafana."
+echo "Build and push complete"
