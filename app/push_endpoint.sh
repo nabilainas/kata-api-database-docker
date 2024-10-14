@@ -11,8 +11,8 @@ cd frontend
 docker build --platform linux/amd64 --build-arg "API_URL=${API_URL}" -t "$FRONTEND_IMAGE" .
 docker push "$FRONTEND_IMAGE"
 
-cd ../api
-docker build --platform linux/amd64 --build-arg "API_URL=${API_URL}" -t "$PROMETHEUS_IMAGE" .
+cd ../monitoring/prometheus
+docker build --platform linux/amd64 -t "$PROMETHEUS_IMAGE" .
 docker push "$PROMETHEUS_IMAGE"
 
 docker pull grafana/grafana:latest  
